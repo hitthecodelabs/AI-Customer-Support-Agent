@@ -76,7 +76,7 @@ El sistema:
 ```text
 ┌──────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
 │ Gmail API            │────▶│ FastAPI App           │────▶│ OpenAI API           │
-│ (Email Worker)       │      │ (Main Router)        │      │ (GPT-4 / 4o-mini)    │
+│ (Email Worker)       │      │ (Main Router)        │      │ (GPT-5.1 / 5-mini)   │
 └──────────────────────┘      └──────────┬───────────┘      └──────────────────────┘
                                          │
                                          ▼
