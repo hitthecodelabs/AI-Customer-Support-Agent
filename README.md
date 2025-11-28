@@ -42,8 +42,8 @@ El sistema **monitorea una bandeja de entrada de Gmail**, **clasifica correos en
 ### 1) Clonar el repositorio
 
 ```bash
-git clone https://github.com/hitthecodelabs/gmail-shopify-ai-agent.git
-cd gmail-shopify-ai-agent
+git clone https://github.com/hitthecodelabs/AI-Customer-Support-Agent.git
+cd AI-Customer-Support-Agent
 ```
 
 ### 2) Crear entorno virtual e instalar dependencias
