@@ -117,6 +117,59 @@ graph TB
     style Shopify fill:#96ceb4,stroke:#333,stroke-width:2px
 ```
 
+```mermaid
+
+sequenceDiagram
+    autonumber
+    participant G as 📧 Gmail
+    participant W as ⚙️ Email Worker
+    participant S as 🛡️ Gatekeeper
+    participant R as 🧠 Router
+    participant A as 👤 Agent
+    participant T as 🔧 Tools
+    participant AI as 🤖 OpenAI
+    participant SH as 🛍️ Shopify
+
+    loop Cada 60 segundos
+        W->>G: Buscar emails no leídos
+        G-->>W: Lista de mensajes
+    end
+
+    W->>G: Obtener contenido + historial del hilo
+    G-->>W: Email data
+
+    W->>S: Analizar seguridad
+    
+    alt Email es Spam/Phishing
+        S-->>W: IGNORE
+        W->>G: Marcar como leído
+    else Email es de Partner
+        S-->>W: INTERNAL_ALERT
+        W->>G: Marcar como leído
+    else Email válido
+        S-->>W: PROCESS
+        W->>R: Clasificar mensaje
+        R->>AI: Determinar categoría
+        AI-->>R: Categoría (ej: ShippingDelivery)
+        
+        R->>A: Activar agente especializado
+        A->>AI: Generar respuesta con tools
+        
+        opt Si necesita datos
+            AI-->>A: Tool call request
+            A->>T: Ejecutar tool
+            T->>SH: Consultar API
+            SH-->>T: Datos (orden, stock, etc.)
+            T-->>A: Resultado JSON
+            A->>AI: Continuar con datos
+        end
+        
+        AI-->>A: Respuesta final
+        A->>G: Crear borrador
+        W->>G: Marcar como leído
+    end
+```
+
 ### Flujo de Procesamiento
 
 ```text
