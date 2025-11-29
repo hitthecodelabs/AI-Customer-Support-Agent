@@ -206,6 +206,42 @@ graph LR
     style FinalResponse fill:#2ecc71,stroke:#333
 ```
 
+```mermaid
+
+graph TD
+    Input["📨 Mensaje Entrante"] --> Router["🧠 Router GPT"]
+    
+    Router --> C1["📦 OrderPlacementStatus"]
+    Router --> C2["🚚 ShippingDelivery"]
+    Router --> C3["↩️ ReturnsCancellations"]
+    Router --> C4["💳 PaymentBilling"]
+    Router --> C5["🏷️ ProductInfo"]
+    Router --> C6["🔧 TechnicalIssues"]
+    Router --> C7["🎁 Promotions"]
+    Router --> C8["😤 Complaints"]
+    Router --> C9["👤 AccountOther"]
+
+    C1 --> Agent1["Agent: Order Detective<br/>Tools: lookup_order_crm"]
+    C2 --> Agent2["Agent: Shipping Specialist<br/>Tools: lookup_order_admin"]
+    C3 --> Agent3["Agent: Returns Solutionist<br/>Tools: lookup_order_crm"]
+    C4 --> Agent4["Agent: Billing Support<br/>Tools: lookup_order_crm"]
+    C5 --> Agent5["Agent: Product Expert<br/>Tools: lookup_product_intelligence"]
+    C6 --> Agent6["Agent: Tech Support<br/>Tools: escalate_ticket"]
+    C7 --> Agent7["Agent: Promotions Manager<br/>Tools: store_context"]
+    C8 --> Agent8["Agent: Escalation Manager<br/>Tools: escalate_ticket"]
+    C9 --> Agent9["Agent: General Assistant<br/>Tools: varies"]
+
+    style Router fill:#4ecdc4,stroke:#333,stroke-width:2px
+    style C1 fill:#74b9ff,stroke:#333
+    style C2 fill:#74b9ff,stroke:#333
+    style C3 fill:#74b9ff,stroke:#333
+    style C4 fill:#74b9ff,stroke:#333
+    style C5 fill:#74b9ff,stroke:#333
+    style C6 fill:#74b9ff,stroke:#333
+    style C7 fill:#74b9ff,stroke:#333
+    style C8 fill:#74b9ff,stroke:#333
+    style C9 fill:#74b9ff,stroke:#333
+```
 ### Flujo de Procesamiento
 
 ```text
