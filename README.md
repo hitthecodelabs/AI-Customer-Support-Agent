@@ -73,17 +73,48 @@ El sistema:
 
 ## 🏗️ Arquitectura
 
-```text
-┌──────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
-│ Gmail API            │────▶│ FastAPI App           │────▶│ OpenAI API           │
-│ (Email Worker)       │      │ (Main Router)        │      │ (GPT-5.1 / 5-mini)   │
-└──────────────────────┘      └──────────┬───────────┘      └──────────────────────┘
-                                         │
-                                         ▼
-                             ┌──────────────────────┐
-                             │ Shopify Admin API    │
-                             │ (REST + GraphQL)     │
-                             └──────────────────────┘
+```mermaid
+graph TB
+    subgraph "📧 Email Input"
+        Gmail["Gmail API<br/>(Email Worker)"]
+    end
+
+    subgraph "🖥️ Frontend (Opcional)"
+        User("👤 End User") <-->|HTTP/JSON| Chat["Chat Endpoint<br/>(/chat)"]
+    end
+
+    subgraph "⚙️ Backend Infrastructure"
+        Gmail -->|Polling cada 60s| Security["🛡️ Gatekeeper<br/>(Spam Filter)"]
+        Security -->|PROCESS| Router["🧠 Main Router<br/>(Classifier)"]
+        Security -->|IGNORE| Trash["🗑️ Mark as Read"]
+        Chat --> Router
+        
+        Router --> Agents["👥 Specialized Agents<br/>(9 Categories)"]
+        Agents <-->|Function Calling| Tools["🔧 Tools Engine"]
+    end
+
+    subgraph "🤖 AI Layer"
+        Router <-->|Classification| OpenAI["OpenAI API<br/>(GPT-4o / GPT-4o-mini)"]
+        Agents <-->|Generation| OpenAI
+    end
+
+    subgraph "🛍️ Data Sources"
+        Tools <-->|REST + GraphQL| Shopify["Shopify Admin API"]
+        Shopify --- Orders["📦 Orders"]
+        Shopify --- Products["🏷️ Products"]
+        Shopify --- Inventory["📊 Inventory"]
+        Shopify --- Customers["👤 Customers"]
+    end
+
+    subgraph "📤 Output"
+        Agents -->|Create Draft| Drafts["📝 Gmail Drafts"]
+        Drafts -->|Human Review| Send["✉️ Send Email"]
+    end
+
+    style Security fill:#ff6b6b,stroke:#333,stroke-width:2px
+    style Router fill:#4ecdc4,stroke:#333,stroke-width:2px
+    style OpenAI fill:#9b59b6,stroke:#333,stroke-width:2px
+    style Shopify fill:#96ceb4,stroke:#333,stroke-width:2px
 ```
 
 ### Flujo de Procesamiento
