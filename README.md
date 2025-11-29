@@ -170,6 +170,42 @@ sequenceDiagram
     end
 ```
 
+```mermaid
+
+graph LR
+    subgraph "🧠 OpenAI Decision"
+        AI["gpt-5-mini"] -->|"tool_calls"| Decision{¿Necesita datos?}
+    end
+
+    Decision -->|No| Response["Respuesta directa"]
+    Decision -->|Sí| Tools
+
+    subgraph "🔧 Tools Disponibles"
+        Tools["Tools Engine"]
+        Tools --> T1["lookup_order_crm<br/>📦 Pedido + Cliente VIP"]
+        Tools --> T2["lookup_order_admin<br/>🚚 Estado + Tracking"]
+        Tools --> T3["lookup_product_intelligence<br/>🏷️ Stock + Metafields"]
+        Tools --> T4["lookup_product_stock<br/>📊 Inventario GraphQL"]
+        Tools --> T5["escalate_ticket_to_support<br/>🎫 Crear Ticket"]
+    end
+
+    subgraph "🛍️ Shopify API"
+        T1 & T2 -->|REST| Orders["/orders.json"]
+        T1 -->|REST| Customers["/customers.json"]
+        T3 -->|REST| Products["/products.json"]
+        T3 -->|REST| Metafields["/metafields.json"]
+        T3 & T4 -->|REST| Inventory["/inventory_levels.json"]
+        T4 -->|GraphQL| GQL["graphql.json"]
+    end
+
+    T1 & T2 & T3 & T4 & T5 -->|JSON Result| AI
+    AI --> FinalResponse["✉️ Respuesta Final"]
+
+    style AI fill:#9b59b6,stroke:#333
+    style Tools fill:#3498db,stroke:#333
+    style FinalResponse fill:#2ecc71,stroke:#333
+```
+
 ### Flujo de Procesamiento
 
 ```text
