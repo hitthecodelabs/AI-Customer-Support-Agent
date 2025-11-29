@@ -242,6 +242,48 @@ graph TD
     style C8 fill:#74b9ff,stroke:#333
     style C9 fill:#74b9ff,stroke:#333
 ```
+
+```mermaid
+
+flowchart TD
+    Email["📧 Email Entrante"] --> Extract["Extraer: sender, subject, body"]
+    
+    Extract --> Check1{"🚫 Dominio<br/>bloqueado?"}
+    Check1 -->|Sí| IGNORE1["🗑️ IGNORE"]
+    Check1 -->|No| Check2{"⚙️ Dominio<br/>de sistema?"}
+    
+    Check2 -->|Sí| IGNORE2["🗑️ IGNORE"]
+    Check2 -->|No| Check3{"🤖 Prefijo<br/>automatizado?"}
+    
+    Check3 -->|Sí| IGNORE3["🗑️ IGNORE"]
+    Check3 -->|No| Check4{"📧 Email gratuito<br/>+ keywords spam?"}
+    
+    Check4 -->|Sí| IGNORE4["🗑️ IGNORE"]
+    Check4 -->|No| Check5{"🤝 Dominio<br/>de partner?"}
+    
+    Check5 -->|Sí| ALERT["⚠️ INTERNAL_ALERT"]
+    Check5 -->|No| Check6{"🎣 Subject<br/>phishing?"}
+    
+    Check6 -->|Sí| IGNORE5["🗑️ IGNORE"]
+    Check6 -->|No| Check7{"📝 Body<br/>spam B2B?"}
+    
+    Check7 -->|Sí| IGNORE6["🗑️ IGNORE"]
+    Check7 -->|No| PROCESS["✅ PROCESS"]
+
+    IGNORE1 & IGNORE2 & IGNORE3 & IGNORE4 & IGNORE5 & IGNORE6 --> MarkRead["Marcar como leído"]
+    ALERT --> MarkRead
+    PROCESS --> AI["🧠 Procesar con IA"]
+
+    style PROCESS fill:#2ecc71,stroke:#333,stroke-width:2px
+    style ALERT fill:#f39c12,stroke:#333,stroke-width:2px
+    style IGNORE1 fill:#e74c3c,stroke:#333
+    style IGNORE2 fill:#e74c3c,stroke:#333
+    style IGNORE3 fill:#e74c3c,stroke:#333
+    style IGNORE4 fill:#e74c3c,stroke:#333
+    style IGNORE5 fill:#e74c3c,stroke:#333
+    style IGNORE6 fill:#e74c3c,stroke:#333
+```
+
 ### Flujo de Procesamiento
 
 ```text
