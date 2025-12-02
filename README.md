@@ -9,7 +9,7 @@
 
 **Un agente de soporte al cliente autónomo que monitorea Gmail, consulta Shopify en tiempo real y redacta respuestas inteligentes.**
 
-[Características](#-características-principales) •
+[Características](#-características-principales) •f
 [Instalación](#-instalación) •
 [Configuración](#-configuración) •
 [Uso](#-uso) •
@@ -94,7 +94,7 @@ graph TB
     end
 
     subgraph "🤖 AI Layer"
-        Router <-->|Classification| OpenAI["OpenAI API<br/>(GPT-4o / GPT-4o-mini)"]
+        Router <-->|Classification| OpenAI["OpenAI API<br/>(GPT-5.1 / GPT-5-mini)"]
         Agents <-->|Generation| OpenAI
     end
 
@@ -326,7 +326,7 @@ AI-Customer-Support-Agent/
 
 - **Python** 3.10 o superior  
 - **Cuenta de Shopify** con acceso a Admin API  
-- **API Key de OpenAI** (recomendado: GPT‑4 o GPT‑4o‑mini)  
+- **API Key de OpenAI** (recomendado: GPT‑5.1 o GPT‑5‑mini)  
 - **Proyecto en Google Cloud** con Gmail API habilitada (opcional, para Email Worker)  
 
 ### Paso 1: Clonar el Repositorio
@@ -741,7 +741,7 @@ Solución:
 
 ### Rate Limits de OpenAI
 
-Solución: Reduce el modelo a `gpt-4o-mini` o implementa retry con backoff.
+Solución: Reduce el modelo a `gpt-5-mini` o implementa retry con backoff.
 
 ---
 
